@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/splash"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="90dp"
+        android:paddingLeft="44dp"
+        android:paddingRight="44dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:layout_alignParentLeft="true"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="@string/login"
+            android:textColor="#fff"
+            android:background="@drawable/shape_login_btn"
+            android:textSize="20sp">
+        </Button>
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="@string/register"
+            android:textColor="#fff"
+            android:textSize="20sp">
+        </Button>
+    </RelativeLayout>
+</RelativeLayout>
