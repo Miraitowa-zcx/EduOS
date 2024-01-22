@@ -15,9 +15,9 @@
         android:paddingRight="44dp">
 
         <Button
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:text="@string/login"
             android:textColor="#fff"
             android:background="@drawable/shape_login_btn"
@@ -25,11 +25,12 @@
         </Button>
 
         <Button
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:text="@string/register"
             android:textColor="#fff"
+            android:background="@drawable/shape_register_btn"
             android:textSize="20sp">
         </Button>
     </RelativeLayout>
