@@ -15,23 +15,23 @@
         android:paddingRight="44dp">
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/btn_login"
             android:layout_alignParentStart="true"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="@string/login"
-            android:textColor="#fff"
+            android:textColor="@color/white"
             android:background="@drawable/shape_login_btn"
             android:textSize="20sp">
         </Button>
 
         <Button
-            android:id="@+id/register_btn"
+            android:id="@+id/btn_register"
             android:layout_alignParentEnd="true"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="@string/register"
-            android:textColor="#ffffff"
+            android:textColor="@color/black"
             android:background="@drawable/shape_register_btn"
             android:textSize="20sp">
         </Button>

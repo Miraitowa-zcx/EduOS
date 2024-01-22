@@ -6,6 +6,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.eduos.application.activity.LoginActivity;
+import com.eduos.application.activity.RegisterActivity;
 
 /**
  * 启动界面
@@ -14,14 +15,14 @@ import com.eduos.application.activity.LoginActivity;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnRegister;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnLogin = (Button) findViewById(R.id.login_btn);
+        Button btnLogin = (Button) findViewById(R.id.btn_login);
+        Button btnRegister = (Button) findViewById(R.id.btn_register);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,5 +31,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
