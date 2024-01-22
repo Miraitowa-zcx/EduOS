@@ -6,7 +6,7 @@
 
 ```
 EduOS
-├─app     App 安卓客户端
+├─app  App 安卓客户端
 │    ├─ src  源码
 │    │    ├─ main  主模块
 │    │    │    ├─ java  Java 代码
@@ -14,15 +14,18 @@ EduOS
 │    │    │    │    │    ├─ activity  Activity 代码
 │    │    │    │    │    │    └─ MainActivity  主界面
 │    │    │    │    │    └─ LoginActivity  登录界面
-│    │    │    │    └─ LoginActivity  登录界面
-│    │    │    └─ fragment  Fragment 代码
 │    │    │    │    │    └─ HomeFragment  首页界面
-│    │    │    │    └─ LoginFragment  登录界面
+│    │    │    └─ fragment  Fragment 代码
 │    │    └─ res  资源文件
-│    │        ├─ drawable  图片资源
-│    │        │    └─ ic_launcher  图标
-│    │        └─ mipmap  图标资源
-│    │            └─ ic_launcher_round  图标
+│    │    │    ├─ layout  布局文件
+│    │    │    └─ drawable  图片资源
+│    │    │    │    └─ ic_launcher  图标
+│    │    │    └─ mipmap  图标资源
+│    │    │    │    └─ ic_launcher_round  图标
+│    │    │    └─ values  资源文件
+│    │    │    └─ values-night  资源文件
+│    │    │    └─ xml  XML 代码
+│    │    └─ AndroidManifest.xml  AndroidManifest.xml
 │    └─ gradle  编译文件
 │        └─ build.gradle  编译文件
 ├─server  服务器端
