@@ -31,7 +31,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="@string/register"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:background="@drawable/shape_register_btn"
             android:textSize="20sp">
         </Button>
