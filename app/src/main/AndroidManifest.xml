@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
         <activity
-            android:name=".activity.RegisterActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -25,7 +22,10 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false"/>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
