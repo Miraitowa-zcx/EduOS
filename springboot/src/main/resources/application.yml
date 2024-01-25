@@ -1,0 +1,18 @@
+# server配置
+server:
+  port: 9090
+
+# spring配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver  # 数据库驱动
+    url: jdbc:mysql://localhost:3306/eduos-management?serverTimezone=GMT%2b8  # 数据库连接URL
+    username: root  # 数据库用户名
+    password: Zcx3701812004/  # 数据库密码
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  # 映射器文件位置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 日志实现类
+    map-underscore-to-camel-case: true  # 开启驼峰命名映射
