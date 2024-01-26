@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 异常类
  *
- * @author 20383
+ * @author <a href="mailto:2038322151@qq.com">Miraitowa_zcx</a>
  */
 @Getter
 public class ServiceException extends RuntimeException {
