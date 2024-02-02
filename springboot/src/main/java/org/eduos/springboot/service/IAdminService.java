@@ -61,14 +61,6 @@ public interface IAdminService {
     void deleteById(Integer id);
 
     /**
-     * 用户登录
-     *
-     * @param request 登录请求对象
-     * @return 登录信息对象
-     */
-    LoginDTO login(LoginRequest request);
-
-    /**
      * 用户注册
      *
      * @param admin 注册的管理员对象

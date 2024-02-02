@@ -6,13 +6,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.eduos.springboot.dto.LoginDTO;
-import org.eduos.springboot.entity.Admin;
+import org.eduos.springboot.entity.Student;
 import org.eduos.springboot.exception.ServiceException;
-import org.eduos.springboot.mapper.AdminMapper;
+import org.eduos.springboot.mapper.StudentMapper;
 import org.eduos.springboot.request.BaseRequest;
 import org.eduos.springboot.request.LoginRequest;
 import org.eduos.springboot.request.PasswordRequest;
-import org.eduos.springboot.service.IAdminService;
+import org.eduos.springboot.service.IStudentService;
 import org.eduos.springboot.utils.TokenUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,34 +24,34 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 管理员服务实现类，实现 IAdminService 接口
+ * 学生用户服务实现类，实现 IStudentService 接口
  *
  * @author <a href="mailto:2038322151@qq.com">Miraitowa_zcx</a>
  */
 @Slf4j
 @Service
-public class AdminService implements IAdminService {
+public class StudentService implements IStudentService {
 
-    private final AdminMapper adminMapper;
+    private final StudentMapper studentMapper;
 
     /**
-     * 构造方法，注入管理员mapper
+     * 构造方法，注入学生用户mapper
      *
-     * @param adminMapper 管理员数据访问对象
+     * @param studentMapper 学生用户数据访问对象
      */
     @Autowired
-    public AdminService(AdminMapper adminMapper) {
-        this.adminMapper = adminMapper;
+    public StudentService(StudentMapper studentMapper) {
+        this.studentMapper = studentMapper;
     }
 
     /**
      * 全部查询
      *
-     * @return 管理员列表
+     * @return 学生用户列表
      */
     @Override
-    public List<Admin> list() {
-        return adminMapper.list();
+    public List<Student> list() {
+        return studentMapper.list();
     }
 
     /**
@@ -70,27 +70,27 @@ public class AdminService implements IAdminService {
      * @return 分页信息
      */
     @Override
-    public PageInfo<Admin> page(BaseRequest baseRequest) {
+    public PageInfo<Student> page(BaseRequest baseRequest) {
         PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
-        List<Admin> admin = adminMapper.listByCondition(baseRequest);
-        return new PageInfo<>(admin);
+        List<Student> students = studentMapper.listByCondition(baseRequest);
+        return new PageInfo<>(students);
     }
 
     /**
      * 添加账号
      *
-     * @param admin 管理员对象
+     * @param student 学生用户对象
      */
     @Override
-    public void save(Admin admin) {
+    public void save(Student student) {
         // 如果密码为空，则使用默认密码
-        if (StrUtil.isBlank(admin.getPassword())) {
-            admin.setPassword(DEFAULT_PASS);
+        if (StrUtil.isBlank(student.getPassword())) {
+            student.setPassword(DEFAULT_PASS);
         }
         // 对密码进行MD5加密，加盐
-        admin.setPassword(securePass(admin.getPassword()));
+        student.setPassword(securePass(student.getPassword()));
         try {
-            adminMapper.save(admin);
+            studentMapper.save(student);
         } catch (DuplicateKeyException e) {
             log.error("保存用户失败", e);
             throw new ServiceException("用户已存在");
@@ -101,22 +101,22 @@ public class AdminService implements IAdminService {
      * 根据ID查找用户
      *
      * @param id 用户ID
-     * @return 管理员对象
+     * @return 学生用户对象
      */
     @Override
-    public Admin getById(Integer id) {
-        return adminMapper.getById(id);
+    public Student getById(Integer id) {
+        return studentMapper.getById(id);
     }
 
     /**
      * 更新用户信息
      *
-     * @param admin 管理员对象
+     * @param student 学生用户对象
      */
     @Override
-    public void update(Admin admin) {
-        admin.setUpdatetime(new Timestamp(new Date().getTime()));
-        adminMapper.updateById(admin);
+    public void update(Student student) {
+        student.setUpdatetime(new Timestamp(new Date().getTime()));
+        studentMapper.updateById(student);
     }
 
     /**
@@ -126,25 +126,25 @@ public class AdminService implements IAdminService {
      */
     @Override
     public void deleteById(Integer id) {
-        adminMapper.deleteById(id);
+        studentMapper.deleteById(id);
     }
 
     /**
      * 用户注册
      *
-     * @param admin 管理员对象
+     * @param student 学生用户对象
      * @return 登录信息
      */
     @Override
-    public LoginDTO register(Admin admin) {
-        Admin register = adminMapper.getByUsername(admin.getUsername());
+    public LoginDTO register(Student student) {
+        Student register = studentMapper.getByUsername(student.getUsername());
         if (register != null) {
             throw new ServiceException("用户名已存在");
         } else {
-            admin.setPassword(securePass(admin.getPassword()));
-            adminMapper.save(admin);
+            student.setPassword(securePass(student.getPassword()));
+            studentMapper.save(student);
             LoginDTO loginDTO = new LoginDTO();
-            BeanUtils.copyProperties(admin, loginDTO);
+            BeanUtils.copyProperties(student, loginDTO);
             return loginDTO;
         }
     }
@@ -157,7 +157,7 @@ public class AdminService implements IAdminService {
     @Override
     public void changePass(PasswordRequest request) {
         request.setNewPass(securePass(request.getNewPass()));
-        int count = adminMapper.updatePassword(request);
+        int count = studentMapper.updatePassword(request);
         if (count <= 0) {
             throw new ServiceException("修改失败");
         }

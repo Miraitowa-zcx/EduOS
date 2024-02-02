@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.eduos.springboot.mapper.StudentMapper">
+    <!-- 添加到数据库 -->
+    <insert id="save">
+        insert into student(username, password, phone, email)
+        values (#{username}, #{password}, #{phone}, #{email})
+    </insert>
+
+    <!-- 根据用户名查找 -->
+    <select id="getByUsername" resultType="org.eduos.springboot.entity.Student">
+        select *
+        from student
+        where username = #{username}
+    </select>
+
+    <!-- 更新信息到数据库 -->
+    <update id="updateById">
+        update student
+        set username   = #{username},
+            phone      = #{phone},
+            email      = #{email},
+            updatetime = #{updatetime},
+            status     = #{status}
+        where id = #{id}
+    </update>
+
+    <!-- 更改学生用户密码 -->
+    <update id="updatePassword">
+        update student
+        set password = #{newPass}
+        where username = #{username}
+          and password = #{password}
+    </update>
+
+    <!-- 从数据库中删除信息 -->
+    <delete id="deleteById">
+        delete
+        from student
+        where id = #{id}
+    </delete>
+
+    <!-- 查询所有用户信息 -->
+    <select id="list" resultType="org.eduos.springboot.entity.Student">
+        select *
+        from student
+        order by id desc
+    </select>
+
+    <!-- 分页模糊查询 -->
+    <select id="listByCondition" resultType="org.eduos.springboot.entity.Student">
+        select * from student
+        <where>
+            <if test="username != null and username != ''">
+                username like concat('%', #{ username }, '%')
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone like concat('%', #{ phone }, '%')
+            </if>
+
+            <if test="email != null and email != ''">
+                and email like concat('%', #{email}, '%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据id查询用户信息 -->
+    <select id="getById" resultType="org.eduos.springboot.entity.Student">
+        select *
+        from student
+        where id = #{id}
+    </select>
+
+    <!-- 学生用户登录查询 -->
+    <select id="getByUsernameAndPassword" resultType="org.eduos.springboot.entity.Student">
+        select *
+        from student
+        where username = #{username}
+          and password = #{password}
+    </select>
+</mapper>

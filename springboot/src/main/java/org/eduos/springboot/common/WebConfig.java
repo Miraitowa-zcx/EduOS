@@ -18,8 +18,16 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    /**
+     * JWT拦截器
+     */
     private final JwtInterceptor jwtInterceptor;
 
+    /**
+     * 构造方法注入JWT拦截器
+     *
+     * @param jwtInterceptor JWT拦截器
+     */
     @Autowired
     public WebConfig(JwtInterceptor jwtInterceptor) {
         this.jwtInterceptor = jwtInterceptor;
@@ -27,6 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      * 配置路径匹配规则
+     *
      * @param configurer 路径匹配配置
      */
     @Override
@@ -37,6 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      * 加自定义拦截器JwtInterceptor，设置拦截规则
+     *
      * @param registry 拦截器注册
      */
     @Override
@@ -46,6 +56,7 @@ public class WebConfig implements WebMvcConfigurer {
         List<String> patterns = new ArrayList<>();
         patterns.add("/api/admin/login");
         patterns.add("/api/admin/register");
+        patterns.add("/api/login");
 
         registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**").excludePathPatterns(patterns);
     }

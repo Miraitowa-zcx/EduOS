@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.eduos.springboot.entity.Admin;
 import org.eduos.springboot.exception.ServiceException;
@@ -25,8 +26,14 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtInterceptor implements HandlerInterceptor {
 
+    /**
+     * 错误码401
+     */
     private static final String ERROR_CODE_401 = "401";
 
+    /**
+     * 管理服务接口
+     */
     private final IAdminService adminService;
 
     /**
@@ -48,7 +55,7 @@ public class JwtInterceptor implements HandlerInterceptor {
      * @return 如果请求已通过身份验证，则为 true，否则为 false
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
         String token = request.getHeader("token");
         if (StrUtil.isBlank(token)) {
             token = request.getParameter("token");
@@ -58,6 +65,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (StrUtil.isBlank(token)) {
             throw new ServiceException(ERROR_CODE_401, "无token，请重新登录");
         }
+
         // 获取 token 中的adminId
         String adminId;
         Admin admin;

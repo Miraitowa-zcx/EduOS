@@ -3,36 +3,36 @@ package org.eduos.springboot.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.eduos.springboot.common.Result;
 import org.eduos.springboot.dto.LoginDTO;
-import org.eduos.springboot.entity.Admin;
+import org.eduos.springboot.entity.Student;
 import org.eduos.springboot.request.AdminPageRequest;
 import org.eduos.springboot.request.PasswordRequest;
-import org.eduos.springboot.service.IAdminService;
+import org.eduos.springboot.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- * 管理员控制器
+ * 学生用户控制器
  *
  * @author <a href="mailto:2038322151@qq.com">Miraitowa_zcx</a>
  */
 @Slf4j
 @CrossOrigin
 @RestController
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/student")
+public class StudentController {
 
-    private final IAdminService adminService;
+    private final IStudentService studentService;
 
     /**
-     * 构造函数，注入管理员服务
+     * 构造函数，注入学生用户服务
      *
-     * @param adminService 管理员服务
+     * @param studentService 学生用户服务
      */
     @Autowired
-    public AdminController(IAdminService adminService) {
-        this.adminService = adminService;
+    public StudentController(IStudentService studentService) {
+        this.studentService = studentService;
     }
 
     /**
@@ -43,43 +43,43 @@ public class AdminController {
      */
     @PutMapping("/password")
     public Result password(@RequestBody PasswordRequest request) {
-        adminService.changePass(request);
+        studentService.changePass(request);
         return Result.success();
     }
 
     /**
      * 用户注册
      *
-     * @param admin 用户对象
+     * @param student 用户对象
      * @return 注册结果
      */
     @PostMapping("/register")
-    public Result register(@RequestBody Admin admin) {
-        LoginDTO login = adminService.register(admin);
+    public Result register(@RequestBody Student student) {
+        LoginDTO login = studentService.register(student);
         return Result.success(login);
     }
 
     /**
      * 添加账号
      *
-     * @param admin 用户对象
+     * @param student 用户对象
      * @return 添加结果
      */
     @PostMapping("/save")
-    public Result save(@RequestBody Admin admin) {
-        adminService.save(admin);
+    public Result save(@RequestBody Student student) {
+        studentService.save(student);
         return Result.success();
     }
 
     /**
      * 更新用户信息
      *
-     * @param admin 用户对象
+     * @param student 用户对象
      * @return 更新结果
      */
     @PutMapping("/update")
-    public Result update(@RequestBody Admin admin) {
-        adminService.update(admin);
+    public Result update(@RequestBody Student student) {
+        studentService.update(student);
         return Result.success();
     }
 
@@ -91,7 +91,7 @@ public class AdminController {
      */
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
-        adminService.deleteById(id);
+        studentService.deleteById(id);
         return Result.success();
     }
 
@@ -103,8 +103,8 @@ public class AdminController {
      */
     @GetMapping("/{id}")
     public Result getById(@PathVariable Integer id) {
-        Admin admin = adminService.getById(id);
-        return Result.success(admin);
+        Student student = studentService.getById(id);
+        return Result.success(student);
     }
 
     /**
@@ -114,7 +114,7 @@ public class AdminController {
      */
     @GetMapping("/list")
     public Result list() {
-        List<Admin> list = adminService.list();
+        List<Student> list = studentService.list();
         return Result.success(list);
     }
 
@@ -126,6 +126,6 @@ public class AdminController {
      */
     @GetMapping("/page")
     public Result page(AdminPageRequest adminPageRequest) {
-        return Result.success(adminService.page(adminPageRequest));
+        return Result.success(studentService.page(adminPageRequest));
     }
 }
