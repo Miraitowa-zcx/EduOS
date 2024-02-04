@@ -1,16 +1,19 @@
-package org.eduos.springboot.request;
+package org.eduos.springboot.controller.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
- * 管理员页面请求类，继承BaseRequest
+ * 登录 DTO
  *
  * @author <a href="mailto:2038322151@qq.com">Miraitowa_zcx</a>
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class AdminPageRequest extends BaseRequest {
+public class LoginDTO {
+
+    /**
+     * ID
+     */
+    private Integer id;
 
     /**
      * 用户名
@@ -18,7 +21,7 @@ public class AdminPageRequest extends BaseRequest {
     private String username;
 
     /**
-     * 电话号码
+     * 手机号
      */
     private String phone;
 
@@ -26,4 +29,9 @@ public class AdminPageRequest extends BaseRequest {
      * 邮箱
      */
     private String email;
+
+    /**
+     * Token
+     */
+    private String token;
 }

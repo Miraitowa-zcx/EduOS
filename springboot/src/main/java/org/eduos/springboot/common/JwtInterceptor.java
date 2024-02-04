@@ -7,9 +7,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.eduos.springboot.entity.Admin;
+import org.eduos.springboot.entity.Account;
+import org.eduos.springboot.entity.BaseEntity;
 import org.eduos.springboot.exception.ServiceException;
-import org.eduos.springboot.service.IAdminService;
+import org.eduos.springboot.service.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,16 +35,16 @@ public class JwtInterceptor implements HandlerInterceptor {
     /**
      * 管理服务接口
      */
-    private final IAdminService adminService;
+    private final ILoginService loginService;
 
     /**
-     * 带有 adminService 参数的构造函数
+     * 带有 loginService 参数的构造函数
      *
-     * @param adminService IAdminService实例
+     * @param loginService ILoginService实例
      */
     @Autowired
-    public JwtInterceptor(IAdminService adminService) {
-        this.adminService = adminService;
+    public JwtInterceptor(ILoginService loginService) {
+        this.loginService = loginService;
     }
 
     /**
@@ -67,24 +68,24 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         // 获取 token 中的adminId
-        String adminId;
-        Admin admin;
+        String userId;
+        Account dbUser;
         try {
-            adminId = JWT.decode(token).getAudience().get(0);
+            userId = JWT.decode(token).getAudience().get(0);
             // 根据token中的userid查询数据库
-            admin = adminService.getById(Integer.parseInt(adminId));
+            dbUser = loginService.getById(Integer.parseInt(userId));
         } catch (Exception e) {
             String errMsg = "token验证失败，请重新登录";
             log.error(errMsg + ", token=" + token, e);
             throw new ServiceException(ERROR_CODE_401, errMsg);
         }
-        if (admin == null) {
+        if (dbUser == null) {
             throw new ServiceException(ERROR_CODE_401, "用户不存在，请重新登录");
         }
 
         try {
             // 用户密码加签验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(admin.getPassword())).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(dbUser.getPassword())).build();
             // 验证token
             jwtVerifier.verify(token);
         } catch (JWTVerificationException e) {

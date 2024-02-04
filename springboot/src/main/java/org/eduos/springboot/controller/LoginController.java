@@ -3,8 +3,8 @@ package org.eduos.springboot.controller;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.eduos.springboot.common.Result;
-import org.eduos.springboot.dto.LoginDTO;
-import org.eduos.springboot.request.LoginRequest;
+import org.eduos.springboot.controller.dto.LoginDTO;
+import org.eduos.springboot.entity.Account;
 import org.eduos.springboot.service.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,16 +34,33 @@ public class LoginController {
 
     /**
      * 登录
-     * @param request 登录请求
+     *
+     * @param account 登录请求
      * @return 登录结果
      */
     @PostMapping("/login")
-    public Result login(@RequestBody LoginRequest request) {
-        if (ObjectUtil.isEmpty(request.getUsername()) || ObjectUtil.isEmpty(request.getPassword())
-                || ObjectUtil.isEmpty(request.getRole())) {
+    public Result login(@RequestBody Account account) {
+        if (ObjectUtil.isEmpty(account.getUsername()) || ObjectUtil.isEmpty(account.getPassword())
+                || ObjectUtil.isEmpty(account.getRole())) {
             return Result.error("参数缺失！");
         }
-        LoginDTO login = loginService.login(request);
+        LoginDTO login = loginService.login(account);
+        return Result.success(login);
+    }
+
+    /**
+     * 注册
+     *
+     * @param account 注册请求
+     * @return 注册结果
+     */
+    @PostMapping("/register")
+    public Result register(@RequestBody Account account) {
+        if (ObjectUtil.isEmpty(account.getUsername()) || ObjectUtil.isEmpty(account.getPassword())
+                || ObjectUtil.isEmpty(account.getRole())) {
+            return Result.error("参数缺失！");
+        }
+        LoginDTO login = loginService.register(account);
         return Result.success(login);
     }
 }

@@ -2,10 +2,9 @@ package org.eduos.springboot.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eduos.springboot.common.Result;
-import org.eduos.springboot.dto.LoginDTO;
+import org.eduos.springboot.controller.request.AdminPageRequest;
+import org.eduos.springboot.controller.request.PasswordRequest;
 import org.eduos.springboot.entity.Student;
-import org.eduos.springboot.request.AdminPageRequest;
-import org.eduos.springboot.request.PasswordRequest;
 import org.eduos.springboot.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,18 +44,6 @@ public class StudentController {
     public Result password(@RequestBody PasswordRequest request) {
         studentService.changePass(request);
         return Result.success();
-    }
-
-    /**
-     * 用户注册
-     *
-     * @param student 用户对象
-     * @return 注册结果
-     */
-    @PostMapping("/register")
-    public Result register(@RequestBody Student student) {
-        LoginDTO login = studentService.register(student);
-        return Result.success(login);
     }
 
     /**

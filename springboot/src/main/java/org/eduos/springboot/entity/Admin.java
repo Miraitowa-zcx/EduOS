@@ -13,6 +13,11 @@ import lombok.EqualsAndHashCode;
 public class Admin extends BaseEntity {
 
     /**
+     * 序列化版本号
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * 手机号
      */
     private String phone;

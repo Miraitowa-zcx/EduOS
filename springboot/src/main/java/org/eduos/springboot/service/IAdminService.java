@@ -1,11 +1,9 @@
 package org.eduos.springboot.service;
 
 import com.github.pagehelper.PageInfo;
-import org.eduos.springboot.dto.LoginDTO;
+import org.eduos.springboot.controller.request.BaseRequest;
+import org.eduos.springboot.controller.request.PasswordRequest;
 import org.eduos.springboot.entity.Admin;
-import org.eduos.springboot.request.BaseRequest;
-import org.eduos.springboot.request.LoginRequest;
-import org.eduos.springboot.request.PasswordRequest;
 
 import java.util.List;
 
@@ -59,14 +57,6 @@ public interface IAdminService {
      * @param id 管理员ID
      */
     void deleteById(Integer id);
-
-    /**
-     * 用户注册
-     *
-     * @param admin 注册的管理员对象
-     * @return 注册后的登录信息对象
-     */
-    LoginDTO register(Admin admin);
 
     /**
      * 修改密码

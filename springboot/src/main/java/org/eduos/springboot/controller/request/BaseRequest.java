@@ -1,4 +1,4 @@
-package org.eduos.springboot.request;
+package org.eduos.springboot.controller.request;
 
 import lombok.Data;
 

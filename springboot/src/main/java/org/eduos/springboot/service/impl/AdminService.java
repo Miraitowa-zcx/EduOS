@@ -5,16 +5,12 @@ import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.eduos.springboot.dto.LoginDTO;
+import org.eduos.springboot.controller.request.BaseRequest;
+import org.eduos.springboot.controller.request.PasswordRequest;
 import org.eduos.springboot.entity.Admin;
 import org.eduos.springboot.exception.ServiceException;
 import org.eduos.springboot.mapper.AdminMapper;
-import org.eduos.springboot.request.BaseRequest;
-import org.eduos.springboot.request.LoginRequest;
-import org.eduos.springboot.request.PasswordRequest;
 import org.eduos.springboot.service.IAdminService;
-import org.eduos.springboot.utils.TokenUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -127,26 +123,6 @@ public class AdminService implements IAdminService {
     @Override
     public void deleteById(Integer id) {
         adminMapper.deleteById(id);
-    }
-
-    /**
-     * 用户注册
-     *
-     * @param admin 管理员对象
-     * @return 登录信息
-     */
-    @Override
-    public LoginDTO register(Admin admin) {
-        Admin register = adminMapper.getByUsername(admin.getUsername());
-        if (register != null) {
-            throw new ServiceException("用户名已存在");
-        } else {
-            admin.setPassword(securePass(admin.getPassword()));
-            adminMapper.save(admin);
-            LoginDTO loginDTO = new LoginDTO();
-            BeanUtils.copyProperties(admin, loginDTO);
-            return loginDTO;
-        }
     }
 
     /**

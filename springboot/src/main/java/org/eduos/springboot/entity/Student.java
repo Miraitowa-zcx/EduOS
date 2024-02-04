@@ -12,7 +12,10 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Student extends BaseEntity {
 
-    private static final long serialVersionUID = -22769753886023337L;
+    /**
+     * 序列化版本号
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * 班级名称

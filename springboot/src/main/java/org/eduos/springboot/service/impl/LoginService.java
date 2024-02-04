@@ -2,11 +2,10 @@ package org.eduos.springboot.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.eduos.springboot.dto.LoginDTO;
-import org.eduos.springboot.entity.BaseEntity;
+import org.eduos.springboot.controller.dto.LoginDTO;
+import org.eduos.springboot.entity.Account;
 import org.eduos.springboot.exception.ServiceException;
 import org.eduos.springboot.mapper.LoginMapper;
-import org.eduos.springboot.request.LoginRequest;
 import org.eduos.springboot.service.ILoginService;
 import org.eduos.springboot.utils.TokenUtils;
 import org.springframework.beans.BeanUtils;
@@ -42,11 +41,17 @@ public class LoginService implements ILoginService {
         this.loginMapper = loginMapper;
     }
 
+    /**
+     * 用户登录
+     *
+     * @param account 登录请求对象
+     * @return 登录信息
+     */
     @Override
-    public LoginDTO login(LoginRequest request) {
-        BaseEntity dbUser;
+    public LoginDTO login(Account account) {
+        Account dbUser;
         try {
-            dbUser = loginMapper.getByUserAndPass(request.getUsername(), request.getRole());
+            dbUser = loginMapper.getByUserAndRole(account.getUsername(), account.getRole());
         } catch (Exception e) {
             log.error("用户登录异常", e);
             throw new ServiceException("用户登录异常");
@@ -55,7 +60,7 @@ public class LoginService implements ILoginService {
             throw new ServiceException("用户名或密码错误");
         }
         // 判断密码是否合法
-        String securePass = securePass(request.getPassword());
+        String securePass = securePass(account.getPassword());
         if (!securePass.equals(dbUser.getPassword())) {
 
             throw new ServiceException("用户名或密码错误");
@@ -73,7 +78,38 @@ public class LoginService implements ILoginService {
         return loginDTO;
     }
 
-        /**
+    /**
+     * 用户注册
+     *
+     * @param account 注册对象
+     * @return 注册信息
+     */
+    @Override
+    public LoginDTO register(Account account) {
+        Account register = loginMapper.getByUserAndRole(account.getUsername(), account.getRole());
+        if (register != null) {
+            throw new ServiceException("用户名已存在");
+        } else {
+            account.setPassword(securePass(account.getPassword()));
+            loginMapper.save(account);
+            LoginDTO loginDTO = new LoginDTO();
+            BeanUtils.copyProperties(account, loginDTO);
+            return loginDTO;
+        }
+    }
+
+    /**
+     * 根据ID获取用户对象
+     *
+     * @param id 用户ID
+     * @return 对应的用户对象
+     */
+    @Override
+    public Account getById(Integer id) {
+        return loginMapper.getById(id);
+    }
+
+    /**
      * 密码加密解密
      *
      * @param password 密码

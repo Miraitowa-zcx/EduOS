@@ -1,18 +1,14 @@
-package org.eduos.springboot.request;
+package org.eduos.springboot.controller.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * 登录请求实体
+ * 密码修改请求类
  *
  * @author <a href="mailto:2038322151@qq.com">Miraitowa_zcx</a>
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginRequest {
+public class PasswordRequest {
 
     /**
      * 用户名
@@ -25,7 +21,7 @@ public class LoginRequest {
     private String password;
 
     /**
-     * 角色
+     * 新密码
      */
-    private String role;
+    private String newPass;
 }

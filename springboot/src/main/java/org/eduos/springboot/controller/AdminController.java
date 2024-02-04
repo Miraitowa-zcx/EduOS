@@ -2,10 +2,9 @@ package org.eduos.springboot.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eduos.springboot.common.Result;
-import org.eduos.springboot.dto.LoginDTO;
+import org.eduos.springboot.controller.request.AdminPageRequest;
+import org.eduos.springboot.controller.request.PasswordRequest;
 import org.eduos.springboot.entity.Admin;
-import org.eduos.springboot.request.AdminPageRequest;
-import org.eduos.springboot.request.PasswordRequest;
 import org.eduos.springboot.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,18 +44,6 @@ public class AdminController {
     public Result password(@RequestBody PasswordRequest request) {
         adminService.changePass(request);
         return Result.success();
-    }
-
-    /**
-     * 用户注册
-     *
-     * @param admin 用户对象
-     * @return 注册结果
-     */
-    @PostMapping("/register")
-    public Result register(@RequestBody Admin admin) {
-        LoginDTO login = adminService.register(admin);
-        return Result.success(login);
     }
 
     /**

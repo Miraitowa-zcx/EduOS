@@ -3,8 +3,27 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.eduos.springboot.mapper.LoginMapper">
 
+    <!-- 用户注册 -->
+    <insert id="save">
+        <!-- 如果是管理员 -->
+        <if test="role == 'admin'">
+            insert into admin(username, password)
+            values (#{username}, #{password})
+        </if>
+        <!-- 如果是学生 -->
+        <if test="role == 'student'">
+            insert into student(username, password)
+            values (#{username}, #{password})
+        </if>
+        <!-- 如果是教师 -->
+        <if test="role == 'teacher'">
+            insert into teacher(username, password)
+            values (#{username}, #{password})
+        </if>
+    </insert>
+
     <!-- 登录查询 -->
-    <select id="getByUserAndPass" resultType="org.eduos.springboot.entity.BaseEntity">
+    <select id="getByUserAndRole" resultType="org.eduos.springboot.entity.BaseEntity">
         <!-- 如果是管理员 -->
         <if test="role == 'admin'">
             select * from admin
@@ -22,6 +41,25 @@
             select * from teacher
             where username = #{username}
             and role = #{role}
+        </if>
+    </select>
+
+    <!-- 根据id查询用户信息 -->
+    <select id="getById" resultType="org.eduos.springboot.entity.BaseEntity">
+        <!-- 如果是管理员 -->
+        <if test="role == 'admin'">
+            select * from admin
+            where id = #{id}
+        </if>
+        <!-- 如果是学生 -->
+        <if test="role == 'student'">
+            select * from student
+            where id = #{id}
+        </if>
+        <!-- 如果是教师 -->
+        <if test="role == 'teacher'">
+            select * from teacher
+            where id = #{id}
         </if>
     </select>
 </mapper>

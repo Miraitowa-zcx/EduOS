@@ -5,16 +5,12 @@ import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.eduos.springboot.dto.LoginDTO;
+import org.eduos.springboot.controller.request.BaseRequest;
+import org.eduos.springboot.controller.request.PasswordRequest;
 import org.eduos.springboot.entity.Student;
 import org.eduos.springboot.exception.ServiceException;
 import org.eduos.springboot.mapper.StudentMapper;
-import org.eduos.springboot.request.BaseRequest;
-import org.eduos.springboot.request.LoginRequest;
-import org.eduos.springboot.request.PasswordRequest;
 import org.eduos.springboot.service.IStudentService;
-import org.eduos.springboot.utils.TokenUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -127,26 +123,6 @@ public class StudentService implements IStudentService {
     @Override
     public void deleteById(Integer id) {
         studentMapper.deleteById(id);
-    }
-
-    /**
-     * 用户注册
-     *
-     * @param student 学生用户对象
-     * @return 登录信息
-     */
-    @Override
-    public LoginDTO register(Student student) {
-        Student register = studentMapper.getByUsername(student.getUsername());
-        if (register != null) {
-            throw new ServiceException("用户名已存在");
-        } else {
-            student.setPassword(securePass(student.getPassword()));
-            studentMapper.save(student);
-            LoginDTO loginDTO = new LoginDTO();
-            BeanUtils.copyProperties(student, loginDTO);
-            return loginDTO;
-        }
     }
 
     /**

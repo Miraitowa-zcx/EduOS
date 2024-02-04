@@ -12,6 +12,9 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Teacher extends BaseEntity {
 
+    /**
+     * 序列化版本号
+     */
     private static final long serialVersionUID = -22769753886023337L;
 
     /**

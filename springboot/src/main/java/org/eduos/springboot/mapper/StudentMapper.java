@@ -2,8 +2,8 @@ package org.eduos.springboot.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.eduos.springboot.entity.Student;
-import org.eduos.springboot.request.BaseRequest;
-import org.eduos.springboot.request.PasswordRequest;
+import org.eduos.springboot.controller.request.BaseRequest;
+import org.eduos.springboot.controller.request.PasswordRequest;
 
 import java.util.List;
 

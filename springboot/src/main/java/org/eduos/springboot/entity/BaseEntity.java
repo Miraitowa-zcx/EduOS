@@ -2,6 +2,7 @@ package org.eduos.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -11,35 +12,14 @@ import java.sql.Timestamp;
  *
  * @author <a href="mailto:2038322151@qq.com">Miraitowa_zcx</a>
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseEntity implements Serializable {
+public class BaseEntity extends Account implements Serializable {
 
+    /**
+     * 序列化版本号
+     */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 实体对象的ID
-     */
-    private Integer id;
-
-    /**
-     * 用户名
-     */
-    private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
-
-        /**
-     * 状态
-     */
-    private boolean status;
-
-    /**
-     * 角色
-     */
-    private String role;
 
     /**
      * 实体对象的创建时间
